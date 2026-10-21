@@ -1,72 +1,87 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101426">
-<title>NFC Boredom Machine</title>
+<title>NFC Boredom Machine v2</title>
 <style>
-:root{color-scheme:dark;--bg:#101426;--card:#1b2340;--accent:#9a8cff;--text:#f5f6ff;--muted:#b9bfd9;--good:#7ce7b2}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#2b2454 0,#101426 48%);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-main{max-width:760px;margin:auto;padding:22px 16px 48px}header{text-align:center;padding:18px 0 22px}h1{font-size:clamp(2rem,7vw,3.1rem);margin:8px 0}p{color:var(--muted);line-height:1.5}.eyebrow{color:#c7bcff;text-transform:uppercase;letter-spacing:.16em;font-size:.75rem;font-weight:800}
-.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.pill{background:#ffffff12;border:1px solid #ffffff20;padding:8px 12px;border-radius:999px;color:var(--muted);font-size:.9rem}
-.panel{background:#171e36d9;border:1px solid #ffffff20;border-radius:22px;padding:18px;margin:14px 0;box-shadow:0 12px 35px #0002}
-h2{margin:0 0 12px;font-size:1.25rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-button{border:0;border-radius:14px;padding:13px 14px;background:var(--accent);color:#11152b;font-weight:800;font-size:1rem;cursor:pointer;min-height:48px}
-button.secondary{background:#ffffff12;color:var(--text);border:1px solid #ffffff25}button:active{transform:scale(.98)}
-#mission{font-size:1.18rem;color:var(--text);line-height:1.5;min-height:76px}
-#hint,#feedback{background:#ffffff0b;border-radius:12px;padding:12px;color:var(--muted);margin-top:10px;display:none}
-input{width:100%;background:#0f1428;border:1px solid #ffffff30;color:white;border-radius:12px;padding:13px;font-size:1rem;margin:10px 0}
-.small{font-size:.86rem}.success{color:var(--good)!important}.footer{text-align:center;color:#929bbd;font-size:.82rem;padding-top:10px}
+:root{color-scheme:dark;--bg:#0d1020;--panel:#171d35;--panel2:#202846;--accent:#a99aff;--accent2:#77f0c0;--text:#f7f7ff;--muted:#b7bfdc;--line:#ffffff20}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#41316d 0,#17182e 38%,var(--bg) 76%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:850px;margin:auto;padding:18px 14px 44px}header{text-align:center;padding:20px 0 18px}.eyebrow{font-size:.72rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#d0c7ff}h1{font-size:clamp(2rem,7vw,3.3rem);line-height:1.05;margin:10px 0}h2{font-size:1.18rem;margin:0 0 12px}p{color:var(--muted);margin:7px 0 12px}.sub{max-width:570px;margin:0 auto 18px}.stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.pill{padding:7px 12px;border:1px solid var(--line);background:#ffffff0b;border-radius:999px;color:var(--muted);font-size:.88rem}.pill b{color:white}
+.panel{background:linear-gradient(145deg,#1a203bdc,#151a30e8);border:1px solid var(--line);border-radius:22px;padding:17px;margin:13px 0;box-shadow:0 14px 40px #0002}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+button{font:inherit;font-weight:800;border:0;border-radius:14px;padding:12px 13px;min-height:47px;cursor:pointer;background:var(--accent);color:#17152d;transition:transform .08s,filter .15s}button:hover{filter:brightness(1.06)}button:active{transform:scale(.985)}button.secondary{background:#ffffff0c;border:1px solid var(--line);color:var(--text)}button.green{background:var(--accent2);color:#08251d}button:disabled{opacity:.6;cursor:default}
+.modebtn{text-align:left;display:flex;align-items:center;gap:10px}.modebtn span{font-size:1.25rem}.modebtn small{display:block;color:#272044;font-weight:600;font-size:.76rem}
+#mission{font-size:1.15rem;font-weight:650;line-height:1.5;min-height:64px}.badge{display:inline-block;background:#a99aff20;color:#d6ceff;border:1px solid #a99aff50;border-radius:999px;padding:4px 10px;font-size:.75rem;font-weight:850;letter-spacing:.06em}
+input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#0c1021;color:white;font:inherit;margin:10px 0}#hint,#feedback{display:none;padding:12px;border-radius:12px;background:#ffffff0b;margin:10px 0;color:var(--muted)}.good{color:var(--accent2)}.bad{color:#ffb4c1}.tiny{font-size:.82rem;color:var(--muted)}.bar{height:8px;border-radius:99px;background:#ffffff14;overflow:hidden;margin:10px 0}.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s}.toprow{display:flex;justify-content:space-between;align-items:center;gap:10px}.rowbtn{display:flex;gap:8px;flex-wrap:wrap}.rowbtn button{flex:1}.hidden{display:none!important}#reactionBox{margin-top:10px}#reactionTarget{width:100%;min-height:95px;background:#ffffff0c;color:white;border:1px solid var(--line)}.foot{text-align:center;color:#8992b5;font-size:.8rem;padding:14px 5px}
+@media(max-width:480px){main{padding:12px 10px 30px}.panel{padding:14px;border-radius:18px}.grid{gap:7px}.modebtn{padding:10px;font-size:.92rem}.modebtn small{font-size:.7rem}.stats{gap:6px}.pill{font-size:.8rem;padding:6px 9px}}
 </style>
 </head>
 <body><main>
-<header><div class="eyebrow">Your personal mini arcade</div><h1>🎲 NFC Boredom Machine</h1><p>Tap your card. Pick a mission. Beat boredom.</p><div class="stats"><span class="pill">⭐ XP: <b id="xp">0</b></span><span class="pill">🔥 Best streak: <b id="streak">0</b></span><span class="pill">🎯 Played: <b id="played">0</b></span></div></header>
-<section class="panel"><h2>🎮 Choose your mode</h2><div class="grid">
-<button onclick="newMission('brain')">🧠 Brain teaser</button><button onclick="newMission('code')">🔐 Secret code</button>
-<button onclick="newMission('memory')">👀 Memory test</button><button onclick="newMission('reaction')">⚡ Reaction challenge</button>
-<button onclick="newMission('random')">🎲 Surprise me</button><button class="secondary" onclick="newMission('tech')">🕵️ Tech mission</button>
+<header><div class="eyebrow">Your personal mini arcade · v2</div><h1>🎲 NFC Boredom Machine</h1><p class="sub">Tap your card. Pick a mission. Beat boredom. No account, no payment, just play.</p>
+<div class="stats"><span class="pill">⭐ XP <b id="xp">0</b></span><span class="pill">🏆 Level <b id="level">1</b></span><span class="pill">🔥 Streak <b id="streak">0</b></span><span class="pill">🎯 Played <b id="played">0</b></span></div></header>
+<section class="panel"><div class="toprow"><h2>🎮 Choose your mission</h2><button class="secondary" id="soundToggle" onclick="toggleSound()">🔊 Sound on</button></div>
+<div class="grid">
+<button class="modebtn" onclick="newMission('brain')"><span>🧠</span><div>Brain teaser<small>Logic & numbers</small></div></button>
+<button class="modebtn" onclick="newMission('code')"><span>🔐</span><div>Secret code<small>Decode the clue</small></div></button>
+<button class="modebtn" onclick="newMission('memory')"><span>👀</span><div>Memory test<small>Remember the pattern</small></div></button>
+<button class="modebtn" onclick="newMission('reaction')"><span>⚡</span><div>Reaction test<small>How fast are you?</small></div></button>
+<button class="modebtn" onclick="newMission('tech')"><span>🕵️</span><div>Tech mission<small>Think like a tester</small></div></button>
+<button class="modebtn" onclick="newMission('random')"><span>🎲</span><div>Surprise me<small>Anything can happen</small></div></button>
 </div></section>
-<section class="panel"><div class="eyebrow" id="mode">Waiting for mission</div><h2 id="title">Ready, mama?</h2><div id="mission">Pick any mode above. No account, payment or sign-in needed.</div>
-<div id="hint"></div><input id="answer" placeholder="Type your answer here" autocomplete="off" style="display:none">
-<div class="grid"><button id="submit" onclick="checkAnswer()" style="display:none">Check answer</button><button class="secondary" id="showHint" onclick="showHint()" style="display:none">💡 Hint</button><button class="secondary" id="next" onclick="newMission('random')">Next random mission →</button></div><div id="feedback"></div><div id="reactionArea"></div>
-</section>
-<section class="panel"><h2>🏆 How to play</h2><p>Complete a mission to earn 10 XP. Try a new mode when you get bored. This version saves your score on this device using local storage, if your browser allows it.</p><button class="secondary" onclick="resetScore()">Reset my score</button></section>
-<p class="footer">Made for your own timepass · NFC tag only opens this page; it doesn't run code itself.</p>
+<section class="panel"><div class="toprow"><span class="badge" id="category">READY</span><span class="tiny" id="progressText">Missions completed: 0</span></div><h2 id="title" style="margin-top:10px">Ready, mama? 😎</h2><div id="mission">Choose a mission above. Every correct answer earns XP; build your streak and level up.</div>
+<div class="bar"><div id="levelBar"></div></div><div id="hint"></div><input id="answer" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" class="hidden">
+<div class="grid"><button id="submit" class="hidden" onclick="checkAnswer()">Check answer</button><button id="hintBtn" class="secondary hidden" onclick="showHint()">💡 Hint</button></div>
+<div id="reactionBox" class="hidden"><button id="reactionTarget" onclick="reactionClick()">Tap to start</button></div><div id="feedback"></div><div class="rowbtn" style="margin-top:10px"><button class="green" onclick="newMission('random')">Next random mission →</button><button class="secondary" onclick="showHow()">How to play</button></div></section>
+<section class="panel"><div class="toprow"><h2>🏆 Your arcade stats</h2><button class="secondary" onclick="resetStats()">Reset</button></div><p id="rank">Beginner explorer — first mission awaits.</p><p class="tiny">Your XP and stats are saved in this browser on this device. Clearing browser data may erase them.</p></section>
+<section id="how" class="panel hidden"><h2>ℹ️ How to play</h2><p>Choose any mission. Answer puzzles, decode a message, remember a sequence, or test your reaction time. Correct answers earn 10 XP. Faster reaction times can earn bonus XP.</p><p>For your NFC card, write this website URL as a URL/URI record. The tag opens the page; it doesn't run apps or store the whole game.</p><button class="secondary" onclick="$('how').classList.add('hidden')">Close</button></section>
+<footer class="foot">Made for personal timepass · v2 · Keep curious, keep playing ✨</footer>
 </main>
 <script>
 const $=id=>document.getElementById(id);
-let current=null, locked=false, reactionStart=0, reactionTimer=null;
-let stats={xp:0,streak:0,played:0};try{stats=Object.assign(stats,JSON.parse(localStorage.getItem('nfcStats')||'{}'))}catch(e){}
-function renderStats(){$('xp').textContent=stats.xp;$('streak').textContent=stats.streak;$('played').textContent=stats.played;try{localStorage.setItem('nfcStats',JSON.stringify(stats))}catch(e){}}
-renderStats();
-const pools={
+let sound=true,current=null,locked=false,reactState='idle',reactStart=0,reactTimer=null;
+let stats={xp:0,streak:0,played:0,best:0};try{stats=Object.assign(stats,JSON.parse(localStorage.getItem('nfcBoredomV2')||'{}'))}catch(e){}
+function save(){try{localStorage.setItem('nfcBoredomV2',JSON.stringify(stats))}catch(e){}}
+function render(){ $('xp').textContent=stats.xp;$('level').textContent=1+Math.floor(stats.xp/50);$('streak').textContent=stats.streak;$('played').textContent=stats.played;$('progressText').textContent='Missions completed: '+stats.played;let levelXp=stats.xp%50;$('levelBar').style.width=(levelXp/50*100)+'%';$('rank').textContent=stats.xp>=200?'Arcade legend 🏆 — you have serious skills!':stats.xp>=100?'Puzzle master 🧩 — keep going!':stats.xp>=50?'Mission hunter ⚡ — level up!':'Beginner explorer — first mission awaits.';save()}
+render();
+function beep(freq=600,dur=.08){if(!sound)return;try{let C=window.AudioContext||window.webkitAudioContext;if(!C)return;let c=new C(),o=c.createOscillator(),g=c.createGain();o.frequency.value=freq;o.connect(g);g.connect(c.destination);g.gain.value=.035;o.start();o.stop(c.currentTime+dur);o.onended=()=>c.close()}catch(e){}}
+function toggleSound(){sound=!sound;$('soundToggle').textContent=sound?'🔊 Sound on':'🔇 Sound off';if(sound)beep()}
+const data={
 brain:[
-{title:'Number pattern',q:'What comes next? 2, 6, 12, 20, 30, ?',a:['42'],hint:'The gaps are 4, 6, 8, 10…',ex:'The next gap is 12, so 30 + 12 = 42.'},
-{title:'Quick maths',q:'No calculator: 17 × 6 = ?',a:['102'],hint:'10×6 + 7×6',ex:'60 + 42 = 102.'},
-{title:'Riddle',q:'What has keys but cannot open locks?',a:['piano','a piano'],hint:'It makes music.',ex:'A piano has keys, but they are musical keys.'},
-{title:'Logic',q:'A farmer has 17 sheep. All but 9 run away. How many remain?',a:['9','nine'],hint:'“All but 9” means all except 9.',ex:'Nine sheep remain.'}],
+['Number pattern','What comes next? 3, 6, 11, 18, 27, ?',['38'],'The gaps are +3, +5, +7, +9… next is +11.'],
+['Quick maths','No calculator: 48 ÷ 6 + 7 = ?',['15'],'Do division first: 8 + 7.'],
+['Riddle','What has a face and two hands but no arms or legs?',['clock','a clock'],'It tells time.'],
+['Logic','A farmer has 12 eggs. All but 5 break. How many are unbroken?',['5','five'],'“All but 5” means 5 remain unbroken.'],
+['Number trick','I am an odd number. Remove one letter and I become even. What number am I?',['seven'],'Remove the “s” from seven and it becomes “even”.'],
+['Pattern','What comes next: 1, 1, 2, 3, 5, 8, ?',['13'],'Each number is the sum of the previous two.'],
+['Riddle','What gets wetter the more it dries?',['towel','a towel'],'A towel dries things and becomes wet.']],
 code:[
-{title:'Caesar +1',q:'If CAT becomes DBU, what does DOG become?',a:['eph'],hint:'Move every letter forward by one.',ex:'D→E, O→P, G→H.'},
-{title:'Pattern code',q:'Decode: 1=A, 2=B, 3=C. What is 3-1-20?',a:['cat'],hint:'Convert each number to a letter.',ex:'3=C, 1=A, 20=T.'},
-{title:'Reverse it',q:'Reverse the word LEVEL. What do you get?',a:['level'],hint:'It reads the same backwards.',ex:'LEVEL is a palindrome.'}],
+['Caesar +1','If CAT becomes DBU, what does DOG become?',['eph'],'Move every letter one step forward.'],
+['Number code','Using A=1, B=2, C=3… decode 3-1-20.',['cat'],'3=C, 1=A, 20=T.'],
+['Reverse code','Reverse the word LEVEL. What do you get?',['level'],'It is the same forwards and backwards.'],
+['Caesar +1','If MAMA becomes NBNB, what does CODE become?',['dpe'],'Move each letter one step forward.'],
+['Emoji code','🌞 + 🌧️ often makes what appear in the sky?',['rainbow','a rainbow'],'Think of colourful arcs after rain and sunshine.']],
 tech:[
-{title:'NFC basics',q:'Does a normal passive NFC tag run apps by itself? (yes/no)',a:['no'],hint:'The phone reads the tag and decides what to do.',ex:'A passive NFC tag stores data; the phone handles the action.'},
-{title:'Safe testing',q:'What should you avoid when experimenting with your own tag: reading it, or permanently locking it?',a:['locking','permanently locking it','permanently locking'],hint:'One option may be irreversible.',ex:'Avoid permanent lock settings unless you are absolutely sure.'}],
+['NFC basics','Does a passive NFC tag run apps by itself? Answer yes or no.',['no'],'The phone reads the tag and decides what action to take.'],
+['Safe testing','Which is safer on your own tag: reading data or permanently locking it?',['reading','reading data'],'Permanent lock settings can be irreversible.'],
+['Web basics','What does HTTPS help protect while a website loads?',['connection','data','the connection','data in transit','connection and data'],'It encrypts data in transit between browser and website.'],
+['Debugging','A page works on PC but not phone. What should you check first: URL or wallpaper?',['url','the url','url path'],'Check the exact URL and whether the site loads on mobile.'],
+['NFC memory','Is an NTAG216 a battery-powered mini-computer? Answer yes or no.',['no'],'It is a passive NFC tag with memory, not a computer.']],
 memory:[
-{title:'Memory test',q:'Memorise this for 5 seconds: 🌙 🍋 🚲 ⭐ 🐈. Then type the emojis in order (or type: moon lemon bike star cat).',a:['🌙🍋🚲⭐🐈','moon lemon bike star cat','moon lemon bike star cat.'],hint:'Look away briefly before answering.',ex:'The sequence was moon, lemon, bike, star, cat.'}],
-reaction:[],random:[]
+['Memory sequence','Memorise for 5 seconds: 🍋 🚀 🐢 ⭐ 🎸. Type the names in order.',['lemon rocket turtle star guitar','lemon, rocket, turtle, star, guitar'],'The sequence was lemon, rocket, turtle, star, guitar.'],
+['Memory sequence','Remember: 🔑 🐬 🍕 🌙. Type the names in order.',['key dolphin pizza moon','key, dolphin, pizza, moon'],'The sequence was key, dolphin, pizza, moon.'],
+['Memory sequence','Remember: 🌈 🧊 🐼 🎈. Type the names in order.',['rainbow ice panda balloon','rainbow, ice, panda, balloon'],'The sequence was rainbow, ice, panda, balloon.']]
 };
-function hideControls(){$('answer').style.display='none';$('submit').style.display='none';$('showHint').style.display='none';$('hint').style.display='none';$('feedback').style.display='none';$('reactionArea').innerHTML='';}
-function newMission(mode){
-if(reactionTimer){clearTimeout(reactionTimer);reactionTimer=null}
-hideControls();locked=false;$('answer').value='';$('next').textContent='Next random mission →';
-let chosen=mode;if(mode==='random'){const choices=['brain','code','memory','reaction','tech'];chosen=choices[Math.floor(Math.random()*choices.length)]}
-if(chosen==='reaction'){current={type:'reaction'};$('mode').textContent='⚡ REACTION CHALLENGE';$('title').textContent='Wait for green';$('mission').textContent='Tap start, wait for the box to turn green, then tap it as quickly as you can.';const b=document.createElement('button');b.textContent='Start reaction test';b.onclick=startReaction;$('reactionArea').appendChild(b);return}
-const list=pools[chosen];current={...list[Math.floor(Math.random()*list.length)],type:chosen};$('mode').textContent=chosen.toUpperCase()+' MISSION';$('title').textContent=current.title;$('mission').textContent=current.q;$('answer').style.display='block';$('submit').style.display='block';$('showHint').style.display='block';
-}
-function showHint(){$('hint').textContent='💡 '+current.hint;$('hint').style.display='block'}
-function checkAnswer(){if(!current||locked||current.type==='reaction')return;locked=true;const val=$('answer').value.trim().toLowerCase().replace(/\s+/g,' ');const ok=current.a.some(a=>val===a.toLowerCase().replace(/\s+/g,' '));$('feedback').style.display='block';if(ok){stats.xp+=10;stats.streak+=1;stats.played+=1;$('feedback').innerHTML='<span class="success">Correct! +10 XP 🎉</span><br>'+current.ex}else{stats.streak=0;stats.played+=1;$('feedback').textContent='Not quite — '+current.ex}renderStats()}
-function startReaction(){const area=$('reactionArea');area.innerHTML='';const b=document.createElement('button');b.textContent='Wait… don’t tap yet';b.className='secondary';b.style.width='100%';b.onclick=()=>{if(!b.dataset.ready){clearTimeout(reactionTimer);b.textContent='Too soon! Try again.';b.disabled=true;stats.streak=0;renderStats() }else{const ms=Date.now()-reactionStart;stats.xp+=ms<300?10:ms<450?5:0;stats.played+=1;stats.streak=ms<450?stats.streak+1:0;renderStats();b.disabled=true;b.textContent=`${ms} ms — ${ms<300?'Lightning fast! +10 XP':ms<450?'Nice! +5 XP':'Try to get under 450 ms'}`}};area.appendChild(b);reactionTimer=setTimeout(()=>{b.dataset.ready='1';b.textContent='🟢 TAP NOW!';b.className='';b.style.background='#7ce7b2';reactionStart=Date.now()},1000+Math.random()*3500)}
-function resetScore(){if(confirm('Reset all XP and stats on this device?')){stats={xp:0,streak:0,played:0};renderStats()}}
+function clean(s){return s.toLowerCase().replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim()}
+function hide(){['hint','feedback'].forEach(id=>$(id).style.display='none');$('answer').classList.add('hidden');$('submit').classList.add('hidden');$('hintBtn').classList.add('hidden');$('reactionBox').classList.add('hidden');if(reactTimer)clearTimeout(reactTimer);reactTimer=null;reactState='idle'}
+function newMission(mode){hide();locked=false;$('answer').value='';if(mode==='random'){let opts=['brain','code','memory','tech','reaction'];mode=opts[Math.floor(Math.random()*opts.length)]}
+if(mode==='reaction'){current={type:'reaction'};$('category').textContent='REACTION TEST';$('title').textContent='Ready… set… wait for green!';$('mission').textContent='Tap start. Wait until the button turns green, then tap as quickly as possible. Early taps count as a false start.';$('reactionBox').classList.remove('hidden');$('reactionTarget').textContent='Start reaction test';$('reactionTarget').style.background='';$('reactionTarget').className='secondary';reactState='idle';return}
+let arr=data[mode],item=arr[Math.floor(Math.random()*arr.length)];current={type:mode,title:item[0],q:item[1],answers:item[2],hint:item[3],ex:item[3]};$('category').textContent=mode.toUpperCase();$('title').textContent=item[0];$('mission').textContent=item[1];$('answer').classList.remove('hidden');$('submit').classList.remove('hidden');$('hintBtn').classList.remove('hidden');$('answer').focus()}
+function showHint(){$('hint').textContent='💡 Hint: '+current.hint;$('hint').style.display='block'}
+function checkAnswer(){if(!current||locked||current.type==='reaction')return;locked=true;let v=clean($('answer').value);let ok=current.answers.some(a=>clean(a)===v);let f=$('feedback');f.style.display='block';if(ok){stats.xp+=10;stats.streak++;stats.best=Math.max(stats.best,stats.streak);f.innerHTML='<strong class="good">Correct! +10 XP 🎉</strong><br>'+current.ex;beep(850,.12)}else{stats.streak=0;f.innerHTML='<strong class="bad">Not quite 🙂</strong><br>'+current.ex;beep(220,.15)}stats.played++;render()}
+function reactionClick(){let b=$('reactionTarget');if(reactState==='idle'||reactState==='done'){reactState='waiting';b.textContent='Wait for green…';b.style.background='#5c496e';b.className='';reactTimer=setTimeout(()=>{reactState='go';reactStart=performance.now();b.textContent='🟢 TAP NOW!';b.style.background='#70f0bd';},900+Math.random()*2800);return}
+if(reactState==='waiting'){clearTimeout(reactTimer);reactState='done';stats.streak=0;stats.played++;b.textContent='Too soon! False start. Tap to try again.';b.style.background='#ed8aa5';render();beep(180,.2);return}
+if(reactState==='go'){let ms=Math.round(performance.now()-reactStart);reactState='done';stats.played++;let points=ms<250?20:ms<350?15:ms<500?10:5;stats.xp+=points;stats.streak++;stats.best=Math.max(stats.best,stats.streak);b.textContent=`${ms} ms — +${points} XP! Tap to try again.`;b.style.background='#77f0c0';render();beep(900,.1)}}
+function resetStats(){if(confirm('Reset XP, streak and played count on this browser?')){stats={xp:0,streak:0,played:0,best:0};render()}}
+function showHow(){$('how').classList.toggle('hidden')}
+$('answer').addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer()});
 </script></body></html>
